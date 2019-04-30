@@ -64,4 +64,14 @@ class PostController extends Controller
         $post->editPost($session, $request->input('id'), $request->input('title'), $request->input('content'));
         return redirect()->route('admin.index')->with('info', 'Post edited, new Title is: ' . $request->input('title'));
     }
+public function postAdminCreate(Store $session, Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|min:5',
+            'content' => 'required|min:10'
+        ]);
+        $post = new Post();
+        $post->addPost($session, $request->input('title'), $request->input('content'));
+        return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));
+    }
 }
